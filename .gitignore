@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+GINA
 
 # Extra
 .DS_Store
