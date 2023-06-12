@@ -1,27 +1,53 @@
 #include <raylib.h>
 #include <rcamera.h>
+#include <iostream>
+//#include <bullet/BulletDynamics/btBulletDynamicsCommon.h> 
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 450
 
+#define TREE_COUNT 25
+#define TREE_SPACING 4
+
+float ys[51][51];
+
+float RandomFloat(float min, float max)
+{
+    // this  function assumes max > min, you may want 
+    // more robust error checking for a non-debug build
+    assert(max > min); 
+    float random = ((float) rand()) / (float) RAND_MAX;
+
+    // generate (in your case) a float between 0 and (4.5-.78)
+    // then add .78, giving you a float between .78 and 4.5
+    float range = max - min;  
+    return (random*range) + min;
+}
+
 // Scene drawing
 void DrawScene(void)
 {
-    int count = 5;
-    float spacing = 4;
+    int count = TREE_COUNT;
+    int spacing = TREE_SPACING;
 
     // Grid of cube trees on a plane to make a "world"
-    DrawPlane((Vector3){ 0, 0, 0 }, (Vector2){ 50, 50 }, BEIGE); // Simple world plane
-
+    DrawPlane((Vector3){ 0, 0, 0 }, (Vector2){ 200, 200 }, BEIGE); // Simple world plane
+        
+    int xVal = 0;
     for (float x = -count*spacing; x <= count*spacing; x += spacing)
     {
+        int zVal = 0;
+        xVal++;
         for (float z = -count*spacing; z <= count*spacing; z += spacing)
         {
-            DrawCube((Vector3) { x, 1.5f, z }, 1, 1, 1, LIME);
-            DrawCube((Vector3) { x, 0.5f, z }, 0.25f, 1, 0.25f, BROWN);
+            zVal++;
+            DrawCube((Vector3) {x, ys[xVal][zVal] + 0.5f, z}, 1, 1, 1, LIME);
+            DrawCube((Vector3) {x, ys[xVal][zVal] * 0.5f, z}, 0.25f, ys[xVal][zVal], 0.25f, BROWN);
+            //std::cout << ys[x][z] << std::endl;
         }
     }
 }
+
 
 int main(void)
 {
@@ -43,6 +69,14 @@ int main(void)
 
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+
+    for (int x = 0; x < TREE_COUNT * 2 + 1; ++x)
+    {
+        for (int z = 0; z < TREE_COUNT * 2 + 1; ++z)
+        {
+            ys[x][z] = RandomFloat(0.7f, 5.0f);
+        }
+    }
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -80,12 +114,12 @@ int main(void)
             // DrawRectangle(5, 5, 330, 100, Fade(SKYBLUE, 0.5f));
             // DrawRectangleLines(5, 5, 330, 100, BLUE);
 
-            // DrawText("Camera controls:", 15, 15, 10, BLACK);
-            // DrawText("- Move keys: W, A, S, D, Space, Left-Ctrl", 15, 30, 10, BLACK);
-            // DrawText("- Look around: arrow keys or mouse", 15, 45, 10, BLACK);
-            // DrawText("- Camera mode keys: 1, 2, 3, 4", 15, 60, 10, BLACK);
-            // DrawText("- Zoom keys: num-plus, num-minus or mouse scroll", 15, 75, 10, BLACK);
-            // DrawText("- Camera projection key: P", 15, 90, 10, BLACK);
+            // DrawText("Num trees X:", 15, 15, 10, BLACK);
+            // DrawText(TextFormat("- %08i", checkX), 15, 30, 10, BLACK);
+            // DrawText("Num trees Z:", 15, 45, 10, BLACK);
+            // DrawText(TextFormat("- %08i", checkZ), 15, 60, 10, BLACK);
+            // DrawText("Num total Trees:", 15, 75, 10, BLACK);
+            // DrawText(TextFormat("- %08i", checkAll), 15, 90, 10, BLACK);
 
             // DrawRectangle(600, 5, 195, 100, Fade(SKYBLUE, 0.5f));
             // DrawRectangleLines(600, 5, 195, 100, BLUE);
