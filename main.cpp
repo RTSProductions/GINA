@@ -1,7 +1,7 @@
 #include <raylib.h>
 #include <rcamera.h>
 #include <iostream>
-//#include <bullet/BulletDynamics/btBulletDynamicsCommon.h> 
+#include <BulletDynamics/btBulletDynamicsCommon.h> 
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 450
@@ -43,7 +43,6 @@ void DrawScene(void)
             zVal++;
             DrawCube((Vector3) {x, ys[xVal][zVal] + 0.5f, z}, 1, 1, 1, LIME);
             DrawCube((Vector3) {x, ys[xVal][zVal] * 0.5f, z}, 0.25f, ys[xVal][zVal], 0.25f, BROWN);
-            //std::cout << ys[x][z] << std::endl;
         }
     }
 }
@@ -74,7 +73,7 @@ int main(void)
     {
         for (int z = 0; z < TREE_COUNT * 2 + 1; ++z)
         {
-            ys[x][z] = RandomFloat(0.7f, 5.0f);
+            ys[x][z] = RandomFloat(0.7f, 2.0f);
         }
     }
 
