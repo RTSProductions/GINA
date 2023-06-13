@@ -2,6 +2,7 @@
 #include <rcamera.h>
 #include <iostream>
 #include <BulletDynamics/btBulletDynamicsCommon.h> 
+#include "tools.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 450
@@ -10,19 +11,6 @@
 #define TREE_SPACING 4
 
 float ys[51][51];
-
-float RandomFloat(float min, float max)
-{
-    // this  function assumes max > min, you may want 
-    // more robust error checking for a non-debug build
-    assert(max > min); 
-    float random = ((float) rand()) / (float) RAND_MAX;
-
-    // generate (in your case) a float between 0 and (4.5-.78)
-    // then add .78, giving you a float between .78 and 4.5
-    float range = max - min;  
-    return (random*range) + min;
-}
 
 // Scene drawing
 void DrawScene(void)
@@ -108,24 +96,6 @@ int main(void)
            DrawScene();
 
             EndMode3D();
-
-            // Draw info boxes
-            // DrawRectangle(5, 5, 330, 100, Fade(SKYBLUE, 0.5f));
-            // DrawRectangleLines(5, 5, 330, 100, BLUE);
-
-            // DrawText("Num trees X:", 15, 15, 10, BLACK);
-            // DrawText(TextFormat("- %08i", checkX), 15, 30, 10, BLACK);
-            // DrawText("Num trees Z:", 15, 45, 10, BLACK);
-            // DrawText(TextFormat("- %08i", checkZ), 15, 60, 10, BLACK);
-            // DrawText("Num total Trees:", 15, 75, 10, BLACK);
-            // DrawText(TextFormat("- %08i", checkAll), 15, 90, 10, BLACK);
-
-            // DrawRectangle(600, 5, 195, 100, Fade(SKYBLUE, 0.5f));
-            // DrawRectangleLines(600, 5, 195, 100, BLUE);
-
-            // DrawText(TextFormat("- Position: (%06.3f, %06.3f, %06.3f)", camera.position.x, camera.position.y, camera.position.z), 610, 60, 10, BLACK);
-            // DrawText(TextFormat("- Target: (%06.3f, %06.3f, %06.3f)", camera.target.x, camera.target.y, camera.target.z), 610, 75, 10, BLACK);
-            // DrawText(TextFormat("- Up: (%06.3f, %06.3f, %06.3f)", camera.up.x, camera.up.y, camera.up.z), 610, 90, 10, BLACK);
 
         EndDrawing();
     }
